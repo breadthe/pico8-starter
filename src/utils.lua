@@ -57,3 +57,29 @@ function is_colision(a, b)
 
 	return true
 end
+
+-- chatgpt wrote dis
+function dict_count(t)
+	local n = 0
+	for k, v in pairs(t) do
+		n = n + 1
+	end
+	return n
+end
+
+-- @see https://pico-8.fandom.com/wiki/Centering_Text
+function hcenter(s)
+	-- screen center minus the
+	-- string length times the
+	-- pixels in a char's width,
+	-- cut in half
+	return 64 - #s * 2
+end
+
+-- @see https://pico-8.fandom.com/wiki/Centering_Text
+function vcenter(s)
+	-- screen center minus the
+	-- string height in pixels,
+	-- cut in half
+	return 61
+end
