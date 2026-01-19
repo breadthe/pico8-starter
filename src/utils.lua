@@ -49,11 +49,48 @@ function log(text)
 	printh(text, "log", true)
 end
 
+-- simple 8x8 sprite collision
 function is_collision(a, b)
 	if a.y > b.y + 7 then return false end
 	if b.y > a.y + 7 then return false end
 	if a.x > b.x + 7 then return false end
 	if b.x > a.x + 7 then return false end
+
+	return true
+end
+
+-- objects with smaller hitboxes should define an (optional) property
+-- hitbox = { tl_x, tl_y, br_x, br_y }
+-- representing the bounding box of the sprite
+-- (optional) spr_w, spr_h are the sprite tile width/height (default 1,1 for 8x8 sprites)
+-- chatgpt wrote dis
+function hitbox_edges(o)
+	local hb = o.hitbox
+
+	local w = (o.spr_w or 1) * 8
+	local h = (o.spr_h or 1) * 8
+
+	local max_x = w - 1
+	local max_y = h - 1
+
+	local l = o.x + (hb and hb.tl_x or 0)
+	local t = o.y + (hb and hb.tl_y or 0)
+	local r = o.x + (hb and hb.br_x or max_x)
+	local b = o.y + (hb and hb.br_y or max_y)
+
+	return l, t, r, b
+end
+
+-- advanced collision with support for hitboxes and large sprites
+-- chatgpt wrote dis
+function is_hitbox_collision(a, b)
+	local al, at, ar, ab = hitbox_edges(a)
+	local bl, bt, br, bb = hitbox_edges(b)
+
+	if ar < bl then return false end
+	if br < al then return false end
+	if ab < bt then return false end
+	if bb < at then return false end
 
 	return true
 end
