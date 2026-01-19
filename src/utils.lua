@@ -49,7 +49,7 @@ function log(text)
 	printh(text, "log", true)
 end
 
-function is_colision(a, b)
+function is_collision(a, b)
 	if a.y > b.y + 7 then return false end
 	if b.y > a.y + 7 then return false end
 	if a.x > b.x + 7 then return false end
